@@ -19,6 +19,7 @@ use App\Http\Controllers\ShopController;
 
 Route::get('/',[AppController::class,'index'])->name('app.index');
 Route::get('/shop',[ShopController::class,'index'])->name('shop.index');
+Route::get('/shop/{slug}',[ShopController::class,'productDetails'])->name('shop.product.details');
 
 Auth::routes();
 
