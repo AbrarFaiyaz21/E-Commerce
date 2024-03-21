@@ -1,6 +1,11 @@
 @extends('layouts.base')
 @push('styles')
     <link id="color-link" rel="stylesheet" type="text/css" href="{{ asset('assets/css/demo2.css') }}">
+    <style>
+        .product-box .product-details h5 {
+            width: 100%;
+        }
+    </style>
 @endpush
 @section('content')
 <section class="breadcrumb-section section-b-space" style="padding-top:20px;padding-bottom:20px;">
@@ -201,18 +206,13 @@
                                         <i class="fa fa-bookmark fz-16 me-2"></i>
                                         <span>Wishlist</span>
                                     </a>
-                                    <a href="javascript:void(0)"                                            
+                                    <a href="javascript:void(0)"  onclick="event.preventDefault(),document.getElementById('addtocart').submit();"                                          
                                         id="cartEffect" class="btn btn-solid hover-solid btn-animation">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Add To Cart</span>
-                                        <form id="addtocart" method="post"
-                                            action="http://localhost:8000/cart/store">
-                                            <input type="hidden" name="_token"
-                                                value="MkRqEzTGuoSx6LqJUm0OAKxSgNUYt26wTT7RMUZY"> <input
-                                                type="hidden" name="id" value="1">
-                                            <input type="hidden" name="name"
-                                                value="Autem Repudiandae Accusantium Blanditiis">
-                                            <input type="hidden" name="price" value="13">
+                                        <form id="addtocart" method="post" action="{{ route('cart.store') }}">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $product->id }}">>
                                             <input type="hidden" name="quantity" id="qty" value="1">
                                         </form>
                                     </a>
@@ -872,9 +872,9 @@
                                     </div>
                                     <h3 class="theme-color">
                                         @if ($rproduct->sale_price)
-                                            {{ $rproduct->sale_price }}
+                                            ${{ $rproduct->sale_price }}
                                         @else
-                                            {{ $rproduct->regular_price }}
+                                            ${{ $rproduct->regular_price }}
                                         @endif
                                     </h3>
                                     <button onclick="location.href = 'cart.html';" class="btn listing-content">Add

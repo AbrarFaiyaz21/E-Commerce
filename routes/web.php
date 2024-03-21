@@ -5,6 +5,7 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,9 @@ use App\Http\Controllers\ShopController;
 Route::get('/',[AppController::class,'index'])->name('app.index');
 Route::get('/shop',[ShopController::class,'index'])->name('shop.index');
 Route::get('/shop/{slug}',[ShopController::class,'productDetails'])->name('shop.product.details');
+Route::get('/cart',[CartController::class,'index'])->name('cart.index');
+Route::post('/cart/store',[CartController::class,'addToCart'])->name('cart.store');
+Route::put('/cart/update',[CartController::class,'updateCart'])->name('cart.update');
 
 Auth::routes();
 
