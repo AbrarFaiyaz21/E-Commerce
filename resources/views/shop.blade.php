@@ -531,7 +531,7 @@
 
                 </div>
 
-                {{ $products->links("pagination.default") }}
+                {{ $products->withQueryString()->links("pagination.default") }}
                 {{-- <nav class="page-section">
                     <ul class="pagination">
                         <li class="page-item">
