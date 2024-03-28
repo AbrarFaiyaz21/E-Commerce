@@ -63,8 +63,16 @@
                                 data-bs-parent="#accordionExample">
                                 <div class="accordion-body category-scroll">
                                     <ul class="category-list">
-
-                                        <li>
+                                        @foreach ($brands as $brand)
+                                            <li>
+                                                <div class="form-check ps-0 custome-form-check">
+                                                    <input class="checkbox_animated check-it" id="br{{ $brand->id }}" name="brands" @if(in_array($brand->id, explode(',',$q_brands))) checked = "checked" @endif value="{{ $brand->id }}" type="checkbox" onchange="filterProductByBrand(this)">
+                                                    <label class="form-check-label">{{ $brand->name }}</label>
+                                                    <p class="font-light">({{ $brand->products->count() }})</p>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                        {{-- <li>
                                             <div class="form-check ps-0 custome-form-check">
                                                 <input class="checkbox_animated check-it" id="br1" name="brands"
                                                     value="1" type="checkbox">
@@ -152,7 +160,7 @@
                                                 <label class="form-check-label">Sunt Corrupti</label>
                                                 <p class="font-light">(3)</p>
                                             </div>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </div>
                             </div>
@@ -595,6 +603,7 @@
     <input type="hidden" name="page" id="page" value="{{ $page }}" />
     <input type="hidden" name="size" id="size" value="{{ $size }}" />
     <input type="hidden" name="order" id="order" value="{{ $order }}" />
+    <input type="hidden" name="brands" id="brands" value="{{ $q_brands }}" />
 </form>
 @endsection
 
@@ -608,5 +617,18 @@
             $('#order').val($('#orderby option:selected').val());
             $('#frmFilter').submit();
         });
+        function filterProductByBrand(brand){
+            var brands = "";
+            $("input[name='brands']:checked").each(function(){
+                if(brands == ""){
+                    brands += this.value;
+                }
+                else{
+                    brands += "," + this.value;
+                }
+            });
+            $('#brands').val(brands);
+            $('#frmFilter').submit();
+        }
     </script>
 @endpush
